@@ -6,6 +6,8 @@ import { EncrDecrService } from 'src/shared/security/encript.service';
 import { ToastrService } from 'ngx-toastr';
 import { TokenStorageService } from 'src/shared/services/token.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { DataService } from 'src/shared/services/data.service';
 
 @Component({
   selector: 'app-meals',
@@ -17,13 +19,14 @@ export class MealsComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   editForm: FormGroup = new FormGroup({});
   MealsList: Array<any> = []
-  TotalCalories: Number = 0;
+  TotalCalories: number = 0;
 
   constructor(private fb: FormBuilder,
     private apiService:AuthService,
     private encrtService:EncrDecrService,
     private toastr: ToastrService,
     private tokenService:TokenStorageService,
+    private data: DataService,
     private router: Router) {
     this.form =  this.fb.group({
       mealName:['',[Validators.required]],
@@ -119,6 +122,7 @@ export class MealsComponent implements OnInit {
             obj['edit'] = false
             this.TotalCalories+=obj.calories
           })
+          this.newMessage()
         },
         error=>{
           this.toastr.error(error.error?.message);
@@ -129,5 +133,8 @@ export class MealsComponent implements OnInit {
     }
   }
 
+  newMessage() {
+    this.data.changeMessage(this.TotalCalories)
+  }
 
 }

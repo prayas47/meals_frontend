@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -7,11 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  cartopen =false
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private data: DataService) { }
+  message:number=0;
+  subscription: Subscription = new Subscription;
+  ngOnInit(){
+    this.subscription = this.data.currentMessage.subscribe(message => this.message = message)
   }
 
 }

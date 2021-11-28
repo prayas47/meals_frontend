@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CartService } from 'src/shared/services/cart.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -11,6 +10,7 @@ import { authInterceptorProviders } from '../shared/services/auth.interceptor'
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from '../shared/guard/auth.guard';
 import { SharedModule } from 'src/shared/shared.module';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 @NgModule({
   declarations: [
@@ -23,9 +23,10 @@ import { SharedModule } from 'src/shared/shared.module';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    SharedModule
+    SharedModule,
+    NgHttpLoaderModule.forRoot()
   ],
-  providers: [CartService,authInterceptorProviders,AuthGuard],
+  providers: [authInterceptorProviders,AuthGuard],
   bootstrap: [AppComponent],
   exports: []
 })
