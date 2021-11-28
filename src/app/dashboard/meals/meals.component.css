@@ -5,5 +5,9 @@
 }
 
 .RedCard{
-  color: red;
+  background-color: #ffc9c9;
+}
+
+.GreenCard{
+  background-color: #cbffc9;
 }

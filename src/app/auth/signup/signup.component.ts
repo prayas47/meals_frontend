@@ -4,6 +4,7 @@ import { AuthService } from 'src/shared/services/auth.service';
 import { EncrDecrService } from 'src/shared/security/encript.service';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private apiService:AuthService,
     private encrtService:EncrDecrService,
+    private router: Router,
     private toastr: ToastrService) {
     this.form =  this.fb.group({
       email:['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
@@ -38,8 +40,13 @@ export class SignupComponent implements OnInit {
         console.log(Response)
         this.toastr.success('Login with new account', Response.message);
         this.form.reset()
+        this.router.navigate(['/login'])
       },
-      error=>{console.log(error)}
+      error=>{
+        if(error.error.message){
+          this.toastr.error(error.error?.message);
+        }
+      }
     )
   }
 

@@ -5,6 +5,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http'
 import { TokenStorageService } from './token.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, filter, switchMap, take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 const TOKEN_HEADER_KEY = 'x-access-token';
 
@@ -12,7 +13,7 @@ const TOKEN_HEADER_KEY = 'x-access-token';
 export class AuthInterceptor implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
 
-  constructor(private tokenService: TokenStorageService) { }
+  constructor(private tokenService: TokenStorageService,private toastr: ToastrService,) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
     let authReq = req;
@@ -23,6 +24,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(catchError((error:any) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
+        this.tokenService.signOut()
+        this.toastr.warning('Unauthorized Access!!','Access Denied')
         return  throwError(error)
       }
       return  throwError(error)

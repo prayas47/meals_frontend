@@ -23,11 +23,8 @@ export class MealsComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private apiService:AuthService,
-    private encrtService:EncrDecrService,
     private toastr: ToastrService,
-    private tokenService:TokenStorageService,
-    private data: DataService,
-    private router: Router) {
+    private data: DataService) {
     this.form =  this.fb.group({
       mealName:['',[Validators.required]],
       calories: ['', [Validators.required]],
@@ -55,8 +52,9 @@ export class MealsComponent implements OnInit {
         this.getAllMealsList()
       },
       error=>{
-        console.log(error.error?.message);
-        this.toastr.error(error.error?.message);
+        if(error.error.message){
+          this.toastr.error(error.error?.message);
+        }
       }
     )
   }
@@ -69,7 +67,9 @@ export class MealsComponent implements OnInit {
           this.getAllMealsList()
         },
         error=>{
-          this.toastr.error(error.error?.message);
+          if(error.error.message){
+            this.toastr.error(error.error?.message);
+          }
         }
       )
     } catch (error) {
@@ -102,7 +102,9 @@ export class MealsComponent implements OnInit {
         data.edit = !data.edit
       },
       error=>{
-        this.toastr.error(error.error?.message);
+        if(error.error.message){
+          this.toastr.error(error.error?.message);
+        }
       }
     )
   }
@@ -125,7 +127,9 @@ export class MealsComponent implements OnInit {
           this.newMessage()
         },
         error=>{
-          this.toastr.error(error.error?.message);
+          if(error.error.message){
+            this.toastr.error(error.error?.message);
+          }
         }
       )
     } catch (error) {

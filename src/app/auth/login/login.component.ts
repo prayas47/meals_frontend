@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/dashboard'])
       },
       error=>{
-        console.log(error)
         this.toastr.error('Somthing went wrong!!', 'Invalid Credential');
       }
     )

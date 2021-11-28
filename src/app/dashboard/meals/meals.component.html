@@ -1,9 +1,9 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="" *ngFor="let item of MealsList">
-    <div class="card mb-3 mealsCard" [ngClass]="{'text-danger': TotalCalories > 2000}">
+    <div class="card mb-3 mealsCard"[ngClass]="[(TotalCalories<2000) ? 'GreenCard':'RedCard']" >
       <div *ngIf="item.edit">
         <form [formGroup]="editForm">
-          <div class="card-header bg-transparent">Add Meal</div>
+          <div class="card-header">Edit Meal</div>
           <div class="card-body">
             <div class="input-group mb-3">
               <span class="input-group-text" id="basic-addon1">
@@ -21,15 +21,16 @@
         </form>
       </div>
       <div *ngIf="!item.edit">
-        <div class="card-header bg-transparent">Meal</div>
+        <div class="card-header">Meal</div>
         <div class="card-body">
           <h5 class="card-title text-capitalize">{{item.mealName}}</h5>
           <p class="card-text">Calories : <span class="text-primary">{{item.calories}}</span> </p>
         </div>
       </div>
       <div class="card-footer bg-transparent d-flex" [ngClass]="{'justify-content-between': !item.edit}">
-        <button (click)="editAction(item)" type="button" class="btn btn-outline-dark">{{item.edit ? 'Cancle' : 'Edit'}}</button>
-        <button *ngIf="item.edit" (click)="editSubmit(item)" type="button" class="btn btn-outline-primary mx-sm-2">Save</button>
+        <button *ngIf="!item.edit" (click)="editAction(item)" type="button" class="btn btn-outline-dark">Edit</button>
+        <button *ngIf="item.edit" (click)="item.edit = !item.edit" type="button" class="btn btn-outline-danger">Cancle</button>
+        <button *ngIf="item.edit" (click)="editSubmit(item)" type="button" class="btn btn-outline-success mx-sm-2">Save</button>
         <button *ngIf="!item.edit" (click)="deleteMeal(item._id)" type="button" class="btn btn-outline-danger mx-sm-2">Delete</button>
       </div>
     </div>
