@@ -1,4 +1,9 @@
 .mealsCard{
   width: 18rem;
   height: 15rem;
+  justify-content: space-between;
+}
+
+.RedCard{
+  color: red;
 }

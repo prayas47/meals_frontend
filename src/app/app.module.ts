@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { authInterceptorProviders } from '../shared/services/auth.interceptor'
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from '../shared/guard/auth.guard';
+import { SharedModule } from 'src/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthGuard } from '../shared/guard/auth.guard';
     AuthModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SharedModule
   ],
   providers: [CartService,authInterceptorProviders,AuthGuard],
   bootstrap: [AppComponent],
